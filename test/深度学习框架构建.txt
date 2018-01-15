@@ -1,0 +1,110 @@
+# 硬件环境:
+  CPU:Intel® Core™ i7-7700K CPU @ 4.20GHz × 8  16G内存
+  GPU:GeForce GTX 1080 Ti
+
+# 系统环境：Ubuntu16.04
+
+# 软件包准备：
+https://developer.nvidia.com/cuda-gpus 查看自己的GPU是否支持CUDA
+http://www.nvidia.cn/Download/index.aspx?lang=cn 下载匹配自己显卡的驱动
+https://developer.nvidia.com/cuda-downloads 下载最新的CUDA Toolkit，一定要选runfile
+https://developer.nvidia.com/cudnn 下载cuDNN library
+
+
+
+
+# 开始配置 (http://blog.csdn.net/sikao_luwei/article/details/69375126)
+1. 确认安装了gcc 
+	gcc --version  
+2. CUDA和nvidia驱动编译安装需要内核头文件，所以
+	sudo apt-get install linux-headers-$(uname -r)
+3. 安装nvidia驱动必须禁用nouveau，所以
+创建一个文件 /etc/modprobe.d/blacklist-nouveau.conf 用下面的内容:
+	sudo gedit /etc/modprobe.d/blacklist-nouveau.conf
+	
+	    blacklist nouveau  
+   	    options nouveau modeset=0  
+4. 重新生成内核initramfs:
+	sudo update-initramfs -u 
+5. 为保证禁用成功，重启系统
+6. lsmod | grep nouveau  确保没有输出即可
+
+
+# 驱动安装
+1. Ctrl+Alt+F1进入命令行，关闭X servers
+	sudo service lightdm stop
+2. 开始安装NVIDIA驱动
+	sudo ./NVIDIA-Linux-x86_64-384.111.run
+安装提示基本是选肯定的，提示nvidia-xconfig时如果你的电脑还存在一个核显或者集显就选择不安装，反之选择安装
+3. 安装完毕后，重启，进入图形界面。检查/dev下是否存在nvidia*设备并且权限是0666，如果没有可以执行 nvidia-modprobe来创建这些设备，如果执行没有效果，请检查Secure Boot是否设置为Disable
+如果已经存在，执行  nvidia-smi  ，有类似如下输出代表nvidia驱动正常
+
+
+# CUDA安装 (http://www.cnblogs.com/xuliangxing/p/7575586.html)
+1. 安装缺失的依赖库文件
+	sudo apt-get install freeglut3-dev build-essential libx11-dev libxmu-dev libgl1-mesa-dev libglu1-mesa libglu1-mesa-dev libxi-dev
+2. 安装执行文件
+	sudo ./cuda_9.1.85_387.26_linux.run
+注意：安装过程中会提示你进行一些确认操作，首先是接受服务条款，输入accept确认，然后会提示是否安装cuda tookit、cuda-example等，均输入Y进行确定。但请注意，当询问是否安装附带的驱动时，一定要选N！
+3. 设置环境变量
+	sudo gedit ~/.bashrc 
+export PATH=/usr/local/cuda-9.1/bin:$PATH  
+export LD_LIBRARY_PATH=/usr/local/cuda-9.1/lib64:$LD_LIBRARY_PATH
+export CUDA_HOME=/usr/local/cuda
+4. 使环境变量生效
+	sudo source ~/.bashrc  
+	sudo ldconfig
+5. 测试
+壹。检查cuda是否配置正确
+	nvcc --version
+贰。测试CUDA的sammples
+	# 切换到cuda-samples所在目录
+	cd /usr/local/cuda-9.1/samples 或者 cd /home/NVIDIA_CUDA-9.1_Samples 
+
+	# 没有make，先安装命令 sudo apt-get install cmake，-j是最大限度的使用cpu编译，加快编译的速度
+	make –j
+
+	# 编译完毕，切换release目录（/usr/local/cuda-9.1/samples/bin/x86_64/linux/release完整目录）
+	cd ./bin/x86_64/linux/release
+
+	# 检验是否成功，运行实例
+	./deviceQuery 
+
+	# 可以认真看看自行结果，它显示了你的NVIDIA显卡的相关信息，最后能看到Result = PASS就算成功。
+
+
+# cuDNN安装 （http://blog.csdn.net/u010480194/article/details/54287727）
+	关键点是一定要安装cuda对应的cudnn包
+1. 下载cuDNN
+	https://developer.nvidia.com/rdp/cudnn-download
+2. 解压文件
+	tar -zxvf cudnn-9.1-linux-x64-v7.tgz
+3. 
+	cd cuda/include 
+	sudo cp *.h /usr/local/cuda/include/  (注意这里是你自己的cuda的安装地址，复制*.h文件) 
+4. 
+	cd cuda/lib64 
+	sudo cp libcudnn* /usr/local/cuda/lib64/ 
+5. 
+	sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn* 
+
+
+# Anaconda3安装 （http://www.cnblogs.com/xuliangxing/p/7575586.html）
+1. 下载
+	https://www.anaconda.com/download/
+2. 安装
+	sudo ./Anaconda3-5.0.1-Linux-x86_64.sh
+3. 安装anaconda，回车后，是许可文件，接收许可。直接回车即可。最后会询问是否把anaconda的bin添加到用户的环境变量中，选择yes。在终端输入python发现依然是系统自带的python版本，这是因为环境变量的更新还没有生效，命令行输入如下命令是安装的anaconda生效。如果conda --version没有找到任何信息，说明没有加入到环境变量没有，需要手动加入
+	source /etc/profile 或者 source ~/.bashrc #(全局的环境变量)
+
+
+# TensorFlow-gpu安装
+  注意：安装anaconda后升级提示没有写权限解决方案（http://blog.csdn.net/dafenqie/article/details/78038402）
+  问题在于 anaconda所在文件夹只有root 才有权限，而 sudo 对于conda没用，解决方案是修改文件夹权限给当前用户
+	sudo chown -R usr foldername
+
+
+
+# 各种坑的解决方案
+1. 如今新的Windows PC都是带有UEFI固件的，而且也开启了Secure Boot功能。什么用呢，简单说明下：如今新的WindowsPC都是带有UEFI固件的，而且也开启了SecureBoot功能。Secure Boot可以拒绝引导那些未被UEFI秘钥签名的操作系统，换句话说，只有微软认证的软件才可以被引导。同时还会导致一个问题就是无法使用CUDA安装NVIDIA驱动或者安装CUDA后没有NVIDIA设备。如何解决呢，首先就是要进入BIOS把Secure Boot置为Disable（如果你的电脑无法选为Disable，那无能为力了，换个电脑吧）。
+2. 再一个情况就是双显卡电脑，现在很多的电脑都是一个独显一个核显，这种情况下极易导致系统无法进入图形界面或者是循环登录，这是由于安装NVIDIA驱动或者CUDA时安装了opengl，覆盖了核显的gl库。
