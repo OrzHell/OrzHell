@@ -1,0 +1,41 @@
+.
+├── 讲义代码
+│   ├── bikes.csv
+│   ├── lecture_4.zip
+│   ├── lecture_5_visualization.zip
+│   ├── Lecture_6_text_processing.zip
+│   ├── Manning.Think.Like.a.Data.Scientist.2017.3.pdf
+│   ├── numpy-tutorial-student.ipynb
+│   ├── pandas-tutorial.ipynb
+│   ├── pandas-tutorial-student.ipynb
+│   ├── 第01课
+│   │   ├── l01_code.zip
+│   │   ├── numpy-tutorial-student.ipynb
+│   │   └── 第01课_入门.ppt
+│   ├── 第07课
+│   │   ├── Kaggle-Bicycle-Example.zip
+│   │   ├── 机器学习基本知识.html
+│   │   └── 无敌Scikit_Learn小抄.pdf
+│   ├── 第08课
+│   │   └── lecture8_Python社交网络分析igraph-2017.5.14.zip
+│   ├── 第09课
+│   │   ├── l09_code.zip
+│   │   ├── 第09课_并发和异步.pdf
+│   │   └── 第09课_并发和异步更新.ppt
+│   ├── 第10课
+│   │   └── machineLearning Python.ppt
+│   ├── 机器学习基本知识.html
+│   └── 无敌Scikit_Learn小抄.pdf
+└── 视频课程
+    ├── 第01课 Python和数据分析入门.mp4
+    ├── 第02课 Numpy.mp4
+    ├── 第03课 Pandas.mp4
+    ├── 第04课 数据获取与处理.mp4
+    ├── 第05课 Matplotlib与数据可视化.mp4
+    ├── 第06课 Python文本分析.mp4
+    ├── 第07课 机器学习库Scikit-Learn与应用.mp4
+    ├── 第08课 Python社交网络分析igraph.mp4
+    ├── 第09课 Python多线程.mp4
+    └── 第10课 Python深度学习入门.mp4
+
+7 directories, 31 files
