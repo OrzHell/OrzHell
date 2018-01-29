@@ -1,0 +1,22 @@
+
+添加Graphic Drivers PPA
+	sudo add-apt-repository ppa:graphics-drivers/ppa
+	sudo apt-get update
+
+寻找合适的驱动版本
+	ubuntu-drivers devices
+
+# 安装NVIDIA driver 
+按ctrl+alt+F1进入tty文本模式 
+
+关闭(图形)桌面显示管理器LightDM
+	sudo service lightdm stop
+
+安装nvidia driver
+	sudo apt-get install nvidia-384
+
+	sudo reboot
+
+重启系统后，执行下面的命令查看驱动的安装状态显示安装成功
+	sudo nvidia-smi
+	sudo nvidia-settings
