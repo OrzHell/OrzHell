@@ -1,0 +1,15 @@
+How To Read A Research Paper
+
+1. You have to read the paper several times to understand it. When you read the paper first time, if you do not understand something do not get stuck, keep reading assuming you will figure out that later. When you read it the second time, you will understand much more, and the third time even more ...
+
+2. Try first to get a general idea of the paper: What problem is being solved? What are the main steps? How can I implement the method?, even though I do not understand why each step is performed the way it is performed?
+
+3. Try to relate the method to other methods you know, and conceptually find similarities and differences.
+
+4. In the first reading it may be a good idea to skip the related work, since you do not know all other papers, they will confuse you more.
+
+5. Do not use dictionary to just look up the meaning of technical terms like particle filters, maximum likelihood, they are concepts, dictionaries do not define them. They will tell you literal meanings, which may not be useful.
+
+6. Try to understand each concept in isolation, and then integrate them to understand the whole paper. For instance, the paper on "Feature Integration with adaptive weights in a sequential Monte Carlo Tracker" is quite complex paper at the first look. Because it uses Monte Carlo, particle filter, likelihood etc. But try to understand the gist of it. The paper is about tracking, you know a few tracking methods already. It uses features: color histogram, templates in correlation, shape, etc. You know these features, and you have used them. The probabilities obtained by each features are combined (fused) to achieve tracking. How will you combine the probabilities or confidences of each features: multiply, add, apply threshold and then add ...
+
+7. Particle filter/condensation method is already available in Intell Open CV library, use it, get some idea how it works, what are the parameters, then go back to read the paper again ... If you keep doing it for one week, you will understand a lot about that paper! Next week you do the second paper, and so on ...
