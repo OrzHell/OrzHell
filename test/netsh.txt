@@ -1,5 +1,7 @@
-ipv6 DNS£º2001:470:20::2
+ipv6 DNSÂ£Âº2001:470:20::2
 
+## YouTube è§†é¢‘ ipv6 hosts
+2404:6800:4005:80c::200e www.youtube.com 
 
 # Current Version 17
 # = prev + d(Wikipedia) + d(+Google)
@@ -11,7 +13,7 @@ fe80::1%lo0    localhost
 
 
 
-# Google Services inc G+ Gmail Drive ¡­
+# Google Services inc G+ Gmail Drive Â¡Â­
 # exc Youtube Videos
 
 # g-Alternative-IP
